@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Page with Live Form</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    iframe { border: 2px solid #ccc; border-radius: 10px; }
+    .data-box { background: #f4f4f4; padding: 10px; margin-top: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Live Iframe Form Demo</h2>
+
+  <iframe src="form.html" width="400" height="350"></iframe>
+
+  <div class="data-box">
+    <h3>🟢 Live Updates</h3>
+    <p><strong>Name:</strong> <span id="liveName">...</span></p>
+    <p><strong>Email:</strong> <span id="liveEmail">...</span></p>
+    <p><strong>Message:</strong> <span id="liveMessage">...</span></p>
+  </div>
+
+  <div class="data-box">
+    <h3>✅ Submitted Data</h3>
+    <p><strong>Name:</strong> <span id="subName">---</span></p>
+    <p><strong>Email:</strong> <span id="subEmail">---</span></p>
+    <p><strong>Message:</strong> <span id="subMessage">---</span></p>
+  </div>
+
+  <script>
+    window.addEventListener('message', (event) => {
+      const data = event.data;
+      if (!data || !data.formData) return;
+
+      const { name, email, message } = data.formData;
+
+      if (data.type === 'liveUpdate') {
+        document.getElementById('liveName').innerText = name || '';
+        document.getElementById('liveEmail').innerText = email || '';
+        document.getElementById('liveMessage').innerText = message || '';
+      }
+
+      if (data.type === 'formData') {
+        document.getElementById('subName').innerText = name || '';
+        document.getElementById('subEmail').innerText = email || '';
+        document.getElementById('subMessage').innerText = message || '';
+      }
+    });
+  </script>
+</body>
+</html>
